@@ -1,0 +1,98 @@
+"use client"
+
+import { useState } from "react"
+
+export default function Home() {
+
+const [from,setFrom] = useState("")
+const [to,setTo] = useState("")
+
+return (
+
+<div className="min-h-screen bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white">
+
+{/* HERO SECTION */}
+
+<div className="flex flex-col items-center justify-center h-screen text-center">
+
+<h1 className="text-5xl font-bold animate-bounce">
+Smart AI Travel Planner
+</h1>
+
+<p className="mt-4 text-lg">
+Find the fastest and cheapest travel routes using AI
+</p>
+
+{/* SEARCH BOX */}
+
+<div className="bg-white text-black mt-8 p-6 rounded-xl shadow-xl w-96">
+
+<input
+type="text"
+placeholder="From"
+className="border p-2 w-full mb-3 rounded"
+value={from}
+onChange={(e)=>setFrom(e.target.value)}
+/>
+
+<input
+type="text"
+placeholder="To"
+className="border p-2 w-full mb-3 rounded"
+value={to}
+onChange={(e)=>setTo(e.target.value)}
+/>
+
+<button className="bg-blue-600 text-white w-full p-2 rounded hover:bg-blue-700 transition">
+Search Route
+</button>
+
+</div>
+
+</div>
+
+{/* FEATURES */}
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 bg-white text-black">
+
+<div className="p-6 shadow-lg rounded-xl hover:scale-105 transition">
+<h2 className="text-xl font-bold">Route Optimization</h2>
+<p>Find fastest and cheapest travel routes using AI algorithms.</p>
+</div>
+
+<div className="p-6 shadow-lg rounded-xl hover:scale-105 transition">
+<h2 className="text-xl font-bold">AI Travel Assistant</h2>
+<p>Ask AI for trip ideas, budget planning and itinerary.</p>
+</div>
+
+<div className="p-6 shadow-lg rounded-xl hover:scale-105 transition">
+<h2 className="text-xl font-bold">Destination Explorer</h2>
+<p>Discover history, attractions, restaurants and local food.</p>
+</div>
+
+</div>
+
+{/* IMAGE SECTION */}
+
+<div className="flex justify-center items-center p-10 bg-gray-100">
+
+<img
+src="https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+className="rounded-xl shadow-xl w-2/3 hover:scale-105 transition duration-500"
+/>
+
+</div>
+
+{/* FOOTER */}
+
+<div className="text-center p-6 bg-black text-white">
+
+<p>© 2026 Smart AI Travel Planner</p>
+
+</div>
+
+</div>
+
+)
+
+}
