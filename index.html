@@ -183,9 +183,19 @@ border-radius:12px;
 
 <input id="to" placeholder="To City">
 
-<button onclick="planTrip()">Find Route</button>
+<!-- TRANSPORT SELECTION -->
 
-</div>
+<select id="transport" style="width:100%;padding:12px;border-radius:8px;margin-bottom:10px;">
+
+<option value="">Select Transport</option>
+<option value="Flight">Flight</option>
+<option value="Train">Train</option>
+<option value="Bus">Bus</option>
+<option value="Car">Car</option>
+
+</select>
+
+<button onclick="planTrip()">Find Route</button>
 
 </div>
 
