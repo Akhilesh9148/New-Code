@@ -1,91 +1,170 @@
-"use client"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-import { useState } from "react"
+<title>Smart AI Travel Planner</title>
 
-export default function Home() {
+<script src="https://cdn.tailwindcss.com"></script>
 
-const [from,setFrom] = useState("")
-const [to,setTo] = useState("")
+<style>
+body{
+background: linear-gradient(90deg,#3b82f6,#6366f1,#9333ea);
+min-height:100vh;
+font-family:Arial, Helvetica, sans-serif;
+}
 
-return (
+.bounce{
+animation:bounce 1.5s infinite;
+}
 
-<div className="min-h-screen bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white">
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+}
+</style>
 
-{/* HERO SECTION */}
+</head>
+<body class="text-white">
 
-<div className="flex flex-col items-center justify-center h-screen text-center">
+<div id="app"></div>
 
-<h1 className="text-5xl font-bold animate-bounce">
+<script>
+
+let user = JSON.parse(localStorage.getItem("user"))
+
+function render(){
+
+const app = document.getElementById("app")
+
+if(!user){
+
+app.innerHTML = `
+
+<div class="flex items-center justify-center h-screen">
+
+<div class="bg-white text-black p-8 rounded-xl shadow-xl w-96">
+
+<h1 class="text-2xl font-bold text-center mb-6">
 Smart AI Travel Planner
 </h1>
 
-<p className="mt-4 text-lg">
-Find the fastest and cheapest travel routes using AI
-</p>
+<input id="name" placeholder="Name"
+class="border p-2 w-full mb-3 rounded"/>
 
-{/* SEARCH BOX */}
+<input id="email" placeholder="Email"
+class="border p-2 w-full mb-3 rounded"/>
 
-<div className="bg-white text-black mt-8 p-6 rounded-xl shadow-xl w-96">
+<input id="password" type="password"
+placeholder="Password"
+class="border p-2 w-full mb-3 rounded"/>
 
-<input
-type="text"
-placeholder="From"
-className="border p-2 w-full mb-3 rounded"
-value={from}
-onChange={(e)=>setFrom(e.target.value)}
-/>
+<button onclick="register()"
+class="bg-green-600 text-white w-full p-2 rounded mb-3">
+Register
+</button>
 
-<input
-type="text"
-placeholder="To"
-className="border p-2 w-full mb-3 rounded"
-value={to}
-onChange={(e)=>setTo(e.target.value)}
-/>
-
-<button className="bg-blue-600 text-white w-full p-2 rounded hover:bg-blue-700 transition">
-Search Route
+<button onclick="login()"
+class="bg-blue-600 text-white w-full p-2 rounded">
+Login
 </button>
 
 </div>
 
 </div>
 
-{/* FEATURES */}
+`
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 bg-white text-black">
+return
+}
 
-<div className="p-6 shadow-lg rounded-xl hover:scale-105 transition">
-<h2 className="text-xl font-bold">Route Optimization</h2>
+app.innerHTML = `
+
+<div class="min-h-screen">
+
+<div class="flex justify-between p-6">
+
+<h1 class="text-2xl font-bold">
+Smart AI Travel Planner
+</h1>
+
+<div>
+
+<span class="mr-4">Welcome ${user.name}</span>
+
+<button onclick="logout()"
+class="bg-red-500 px-4 py-2 rounded">
+Logout
+</button>
+
+</div>
+
+</div>
+
+
+<div class="flex flex-col items-center justify-center text-center mt-20">
+
+<h1 class="text-5xl font-bold bounce">
+Plan Your Journey
+</h1>
+
+<p class="mt-4 text-lg">
+Find fastest and cheapest travel routes using AI
+</p>
+
+<div class="bg-white text-black mt-8 p-6 rounded-xl shadow-xl w-96">
+
+<input id="from"
+placeholder="From"
+class="border p-2 w-full mb-3 rounded"/>
+
+<input id="to"
+placeholder="To"
+class="border p-2 w-full mb-3 rounded"/>
+
+<button onclick="searchRoute()"
+class="bg-blue-600 text-white w-full p-2 rounded">
+Search Route
+</button>
+
+<div id="result" class="mt-4"></div>
+
+</div>
+
+</div>
+
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 bg-white text-black mt-20">
+
+<div class="p-6 shadow-lg rounded-xl">
+<h2 class="text-xl font-bold">Route Optimization</h2>
 <p>Find fastest and cheapest travel routes using AI algorithms.</p>
 </div>
 
-<div className="p-6 shadow-lg rounded-xl hover:scale-105 transition">
-<h2 className="text-xl font-bold">AI Travel Assistant</h2>
-<p>Ask AI for trip ideas, budget planning and itinerary.</p>
+<div class="p-6 shadow-lg rounded-xl">
+<h2 class="text-xl font-bold">AI Travel Assistant</h2>
+<p>Ask AI for trip ideas and itinerary.</p>
 </div>
 
-<div className="p-6 shadow-lg rounded-xl hover:scale-105 transition">
-<h2 className="text-xl font-bold">Destination Explorer</h2>
-<p>Discover history, attractions, restaurants and local food.</p>
+<div class="p-6 shadow-lg rounded-xl">
+<h2 class="text-xl font-bold">Destination Explorer</h2>
+<p>Discover attractions and local food.</p>
 </div>
 
 </div>
 
-{/* IMAGE SECTION */}
 
-<div className="flex justify-center items-center p-10 bg-gray-100">
+<div class="flex justify-center items-center p-10 bg-gray-100">
 
 <img
 src="https://images.unsplash.com/photo-1501785888041-af3ef285b470"
-className="rounded-xl shadow-xl w-2/3 hover:scale-105 transition duration-500"
-/>
+class="rounded-xl shadow-xl w-2/3"/>
 
 </div>
 
-{/* FOOTER */}
 
-<div className="text-center p-6 bg-black text-white">
+<div class="text-center p-6 bg-black">
 
 <p>© 2026 Smart AI Travel Planner</p>
 
@@ -93,6 +172,83 @@ className="rounded-xl shadow-xl w-2/3 hover:scale-105 transition duration-500"
 
 </div>
 
-)
+`
 
 }
+
+function register(){
+
+const name = document.getElementById("name").value
+const email = document.getElementById("email").value
+const password = document.getElementById("password").value
+
+const newUser = {name,email,password}
+
+localStorage.setItem("user",JSON.stringify(newUser))
+
+user = newUser
+
+render()
+
+}
+
+function login(){
+
+const email = document.getElementById("email").value
+const password = document.getElementById("password").value
+
+const savedUser = JSON.parse(localStorage.getItem("user"))
+
+if(savedUser && savedUser.email === email && savedUser.password === password){
+
+user = savedUser
+render()
+
+}else{
+
+alert("Invalid login")
+
+}
+
+}
+
+function logout(){
+
+localStorage.removeItem("user")
+user = null
+render()
+
+}
+
+function searchRoute(){
+
+const from = document.getElementById("from").value
+const to = document.getElementById("to").value
+
+const result = document.getElementById("result")
+
+const transport = ["Bus","Train","Flight","Taxi"]
+
+const randomTransport = transport[Math.floor(Math.random()*transport.length)]
+
+const time = Math.floor(Math.random()*8)+2
+const cost = Math.floor(Math.random()*4000)+500
+const distance = Math.floor(Math.random()*1500)+200
+
+result.innerHTML = `
+
+<p><b>Transport:</b> ${randomTransport}</p>
+<p><b>Time:</b> ${time} hours</p>
+<p><b>Cost:</b> ₹${cost}</p>
+<p><b>Distance:</b> ${distance} km</p>
+
+`
+
+}
+
+render()
+
+</script>
+
+</body>
+</html>
