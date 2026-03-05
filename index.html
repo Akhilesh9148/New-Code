@@ -69,6 +69,25 @@ animation:float 4s infinite;
 100%{transform:translateY(0)}
 }
 
+/* SEARCH PANEL */
+
+.panel{
+margin-top:30px;
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:12px;
+width:320px;
+backdrop-filter:blur(12px);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+border:none;
+}
+
 /* MAP */
 
 .map{
@@ -92,6 +111,7 @@ top:50%;
 left:30%;
 transform:rotate(20deg);
 animation:moveRoute 2s infinite linear;
+display:none;
 }
 
 @keyframes moveRoute{
@@ -100,23 +120,12 @@ animation:moveRoute 2s infinite linear;
 100%{opacity:0}
 }
 
-/* SEARCH PANEL */
+/* RESULT */
 
-.panel{
-margin-top:30px;
-background:rgba(255,255,255,0.1);
-padding:25px;
-border-radius:12px;
-width:320px;
-backdrop-filter:blur(12px);
-}
-
-input{
-width:100%;
-padding:12px;
-margin-bottom:10px;
-border-radius:8px;
-border:none;
+.result{
+text-align:center;
+margin-top:20px;
+font-size:18px;
 }
 
 /* DESTINATION CARDS */
@@ -165,7 +174,7 @@ border-radius:12px;
 
 <h2>AI Travel Planner</h2>
 
-<button onclick="toggleMode()">Toggle Dark / Light</button>
+<button onclick="toggleMode()">Dark / Light</button>
 
 </nav>
 
@@ -183,9 +192,7 @@ border-radius:12px;
 
 <input id="to" placeholder="To City">
 
-<!-- TRANSPORT SELECTION -->
-
-<select id="transport" style="width:100%;padding:12px;border-radius:8px;margin-bottom:10px;">
+<select id="transport">
 
 <option value="">Select Transport</option>
 <option value="Flight">Flight</option>
@@ -199,13 +206,17 @@ border-radius:12px;
 
 </div>
 
+</div>
+
 <!-- MAP -->
 
 <div class="map">
 
-<div class="route"></div>
+<div class="route" id="routeLine"></div>
 
 </div>
+
+<div class="result" id="result"></div>
 
 <!-- DESTINATIONS -->
 
@@ -269,8 +280,22 @@ function planTrip(){
 
 let from=document.getElementById("from").value
 let to=document.getElementById("to").value
+let transport=document.getElementById("transport").value
 
-alert("Route planned from "+from+" to "+to)
+if(!from || !to || !transport){
+
+alert("Please enter cities and select transport")
+
+return
+
+}
+
+document.getElementById("routeLine").style.display="block"
+
+document.getElementById("result").innerHTML=
+
+"Route from <b>"+from+"</b> to <b>"+to+
+"</b><br>Preferred Transport: <b>"+transport+"</b>"
 
 }
 
@@ -288,4 +313,3 @@ document.getElementById("answer").innerText=
 </body>
 
 </html>
-
