@@ -1,31 +1,81 @@
-/* GLOBAL */
+/* GLOBAL RESET */
 
-body{
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#0f172a,#1e3a8a,#6366f1);
-color:white;
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
-/* HERO SECTION */
+/* BODY */
+
+body{
+background:#0f172a;
+color:white;
+transition:0.4s;
+line-height:1.6;
+}
+
+/* LIGHT MODE */
+
+body.light{
+background:#ffffff;
+color:#111;
+}
+
+/* NAVBAR */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+}
+
+nav h2{
+font-size:22px;
+font-weight:600;
+}
+
+/* BUTTON */
+
+button{
+padding:10px 18px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
+font-weight:500;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+background:#2563eb;
+}
+
+/* HERO */
 
 .hero{
-height:100vh;
+height:70vh;
 display:flex;
 flex-direction:column;
-align-items:center;
 justify-content:center;
+align-items:center;
 text-align:center;
 padding:20px;
 }
 
 .hero h1{
-font-size:60px;
-animation:float 3s infinite;
+font-size:55px;
+margin-bottom:10px;
+animation:float 4s infinite;
 }
 
 .hero p{
-margin-top:10px;
 font-size:18px;
 opacity:0.9;
 }
@@ -33,87 +83,155 @@ opacity:0.9;
 /* FLOAT ANIMATION */
 
 @keyframes float{
+
 0%{transform:translateY(0)}
-50%{transform:translateY(-15px)}
+
+50%{transform:translateY(-10px)}
+
 100%{transform:translateY(0)}
+
 }
 
-/* CARD STYLE */
+/* SEARCH PANEL */
 
-.card{
+.panel{
+margin-top:30px;
 background:rgba(255,255,255,0.1);
 backdrop-filter:blur(12px);
 padding:25px;
-border-radius:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
-transition:0.3s;
+border-radius:14px;
+width:320px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
-.card:hover{
-transform:scale(1.05);
-}
+/* INPUT */
 
-/* INPUT FIELDS */
-
-input{
-outline:none;
+input,
+select{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border-radius:8px;
 border:none;
+font-size:14px;
 }
 
 /* MAP */
 
-#map{
-margin-top:20px;
-}
-
-/* IMAGE GALLERY */
-
-img{
+.map{
 width:100%;
-height:220px;
-object-fit:cover;
-transition:0.4s;
+height:350px;
+background:url("https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg");
+background-size:cover;
+background-position:center;
+margin-top:40px;
+position:relative;
 }
 
-img:hover{
-transform:scale(1.05);
+/* ROUTE LINE */
+
+.route{
+position:absolute;
+width:200px;
+height:3px;
+background:red;
+top:50%;
+left:30%;
+transform:rotate(20deg);
+animation:moveRoute 2s infinite linear;
+display:none;
 }
 
-/* RESULT SECTION */
+/* ROUTE ANIMATION */
 
-#result{
-min-height:100vh;
-background:#0f172a;
+@keyframes moveRoute{
+
+0%{opacity:0}
+
+50%{opacity:1}
+
+100%{opacity:0}
+
 }
 
-/* RECOMMENDATION CARDS */
+/* RESULT */
 
-#recommendations .card{
+.result{
 text-align:center;
+margin-top:20px;
+font-size:18px;
+font-weight:500;
 }
 
-/* BUTTONS */
+/* DESTINATIONS GRID */
 
-button{
-cursor:pointer;
-font-weight:bold;
-transition:0.3s;
+.destinations{
+margin-top:60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:40px;
 }
 
-button:hover{
-transform:scale(1.05);
+/* DESTINATION CARD */
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:20px;
+border-radius:12px;
+transition:0.4s;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* MOBILE RESPONSIVE */
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+/* AI PANEL */
+
+.ai-panel{
+margin:40px;
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:12px;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* AI INPUT */
+
+.ai-panel input{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-bottom:10px;
+}
+
+/* RESPONSIVE */
 
 @media(max-width:768px){
 
 .hero h1{
-font-size:40px;
+font-size:38px;
 }
 
-.card{
-width:100%;
+.panel{
+width:90%;
+}
+
+nav{
+flex-direction:column;
+gap:10px;
 }
 
 }
