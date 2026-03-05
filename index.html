@@ -1,255 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Smart AI Travel Planner</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+
 body{
-background: linear-gradient(90deg,#3b82f6,#6366f1,#9333ea);
-min-height:100vh;
-font-family:Arial, Helvetica, sans-serif;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e3a8a,#6366f1);
+color:white;
 }
 
-.bounce{
-animation:bounce 1.5s infinite;
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
 }
 
-@keyframes bounce{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
+.hero h1{
+font-size:60px;
+animation:float 3s infinite;
 }
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-15px)}
+100%{transform:translateY(0)}
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(12px);
+padding:25px;
+border-radius:15px;
+}
+
 </style>
 
 </head>
-<link rel="stylesheet" href="styles.css">
-<body class="text-white">
 
-<div id="app"></div>
+<body>
+
+<!-- HERO -->
+
+<div class="hero" id="home">
+
+<h1>Smart AI Travel Planner</h1>
+
+<p class="mt-3 text-lg">AI powered route planning and travel discovery</p>
+
+<div class="card mt-8 w-80">
+
+<input id="from" placeholder="From City"
+class="w-full p-3 mb-3 rounded text-black">
+
+<input id="to" placeholder="To City"
+class="w-full p-3 mb-3 rounded text-black">
+
+<button onclick="planTrip()"
+class="bg-blue-600 w-full p-3 rounded">
+Plan Journey
+</button>
+
+</div>
+
+</div>
+
+<!-- RESULT -->
+
+<div id="result" class="hidden p-10">
+
+<h2 class="text-3xl mb-4" id="routeTitle"></h2>
+
+<p id="routeInfo"></p>
+
+<!-- MAP -->
+
+<div class="mt-6">
+
+<iframe id="map"
+width="100%"
+height="400"
+style="border:0;border-radius:12px"
+loading="lazy"></iframe>
+
+</div>
+
+
+<!-- RECOMMENDATIONS -->
+
+<div class="mt-10">
+
+<h3 class="text-2xl mb-3">AI Travel Recommendations</h3>
+
+<div id="recommendations"
+class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+</div>
+
+
+<!-- TRAVEL BOOKING -->
+
+<div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+<a id="flightLink" target="_blank"
+class="card text-center hover:scale-105 transition">
+
+✈ Book Flights
+
+</a>
+
+<a id="hotelLink" target="_blank"
+class="card text-center hover:scale-105 transition">
+
+🏨 Book Hotels
+
+</a>
+
+<a id="trainLink" target="_blank"
+class="card text-center hover:scale-105 transition">
+
+🚆 Train Tickets
+
+</a>
+
+</div>
+
+
+<!-- AI CHAT -->
+
+<div class="mt-10">
+
+<h3 class="text-2xl mb-3">AI Travel Assistant</h3>
+
+<div class="card">
+
+<input id="question"
+placeholder="Ask travel question..."
+class="w-full p-3 rounded text-black">
+
+<button onclick="askAI()"
+class="bg-purple-600 p-3 mt-3 rounded">
+
+Ask AI
+
+</button>
+
+<p id="aiAnswer" class="mt-4"></p>
+
+</div>
+
+</div>
+
+
+<!-- PHOTOS -->
+
+<div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+<img class="rounded-lg"
+src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
+
+<img class="rounded-lg"
+src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1">
+
+<img class="rounded-lg"
+src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800">
+
+</div>
+
+</div>
+
 
 <script>
 
-let user = JSON.parse(localStorage.getItem("user"))
+function planTrip(){
 
-function render(){
+let from=document.getElementById("from").value
+let to=document.getElementById("to").value
 
-const app = document.getElementById("app")
+if(!from||!to){
 
-if(!user){
-
-app.innerHTML = `
-
-<div class="flex items-center justify-center h-screen">
-
-<div class="bg-white text-black p-8 rounded-xl shadow-xl w-96">
-
-<h1 class="text-2xl font-bold text-center mb-6">
-Smart AI Travel Planner
-</h1>
-
-<input id="name" placeholder="Name"
-class="border p-2 w-full mb-3 rounded"/>
-
-<input id="email" placeholder="Email"
-class="border p-2 w-full mb-3 rounded"/>
-
-<input id="password" type="password"
-placeholder="Password"
-class="border p-2 w-full mb-3 rounded"/>
-
-<button onclick="register()"
-class="bg-green-600 text-white w-full p-2 rounded mb-3">
-Register
-</button>
-
-<button onclick="login()"
-class="bg-blue-600 text-white w-full p-2 rounded">
-Login
-</button>
-
-</div>
-
-</div>
-
-`
+alert("Enter locations")
 
 return
-}
-
-app.innerHTML = `
-
-<div class="min-h-screen">
-
-<div class="flex justify-between p-6">
-
-<h1 class="text-2xl font-bold">
-Smart AI Travel Planner
-</h1>
-
-<div>
-
-<span class="mr-4">Welcome ${user.name}</span>
-
-<button onclick="logout()"
-class="bg-red-500 px-4 py-2 rounded">
-Logout
-</button>
-
-</div>
-
-</div>
-
-
-<div class="flex flex-col items-center justify-center text-center mt-20">
-
-<h1 class="text-5xl font-bold bounce">
-Plan Your Journey
-</h1>
-
-<p class="mt-4 text-lg">
-Find fastest and cheapest travel routes using AI
-</p>
-
-<div class="bg-white text-black mt-8 p-6 rounded-xl shadow-xl w-96">
-
-<input id="from"
-placeholder="From"
-class="border p-2 w-full mb-3 rounded"/>
-
-<input id="to"
-placeholder="To"
-class="border p-2 w-full mb-3 rounded"/>
-
-<button onclick="searchRoute()"
-class="bg-blue-600 text-white w-full p-2 rounded">
-Search Route
-</button>
-
-<div id="result" class="mt-4"></div>
-
-</div>
-
-</div>
-
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 bg-white text-black mt-20">
-
-<div class="p-6 shadow-lg rounded-xl">
-<h2 class="text-xl font-bold">Route Optimization</h2>
-<p>Find fastest and cheapest travel routes using AI algorithms.</p>
-</div>
-
-<div class="p-6 shadow-lg rounded-xl">
-<h2 class="text-xl font-bold">AI Travel Assistant</h2>
-<p>Ask AI for trip ideas and itinerary.</p>
-</div>
-
-<div class="p-6 shadow-lg rounded-xl">
-<h2 class="text-xl font-bold">Destination Explorer</h2>
-<p>Discover attractions and local food.</p>
-</div>
-
-</div>
-
-
-<div class="flex justify-center items-center p-10 bg-gray-100">
-
-<img
-src="https://images.unsplash.com/photo-1501785888041-af3ef285b470"
-class="rounded-xl shadow-xl w-2/3"/>
-
-</div>
-
-
-<div class="text-center p-6 bg-black">
-
-<p>© 2026 Smart AI Travel Planner</p>
-
-</div>
-
-</div>
-
-`
 
 }
 
-function register(){
+document.getElementById("home").style.display="none"
+document.getElementById("result").classList.remove("hidden")
 
-const name = document.getElementById("name").value
-const email = document.getElementById("email").value
-const password = document.getElementById("password").value
+document.getElementById("routeTitle").innerText =
+"Travel from "+from+" → "+to
 
-const newUser = {name,email,password}
+let transport=["Flight","Train","Bus","Car"]
 
-localStorage.setItem("user",JSON.stringify(newUser))
+let t=transport[Math.floor(Math.random()*transport.length)]
 
-user = newUser
+let cost=Math.floor(Math.random()*5000)+500
+let time=Math.floor(Math.random()*10)+2
 
-render()
+document.getElementById("routeInfo").innerHTML=
+
+"Best Transport: "+t+
+"<br>Estimated Cost: ₹"+cost+
+"<br>Estimated Time: "+time+" hours"
+
+
+let mapURL=
+"https://www.google.com/maps?q="+from+"%20to%20"+to+"&output=embed"
+
+document.getElementById("map").src=mapURL
+
+
+document.getElementById("flightLink").href=
+"https://www.google.com/travel/flights?q="+from+"%20to%20"+to
+
+document.getElementById("hotelLink").href=
+"https://www.booking.com/searchresults.html?ss="+to
+
+document.getElementById("trainLink").href=
+"https://www.irctc.co.in"
+
+
+showRecommendations()
 
 }
 
-function login(){
+function showRecommendations(){
 
-const email = document.getElementById("email").value
-const password = document.getElementById("password").value
+let places=["Goa","Bali","Dubai","Paris","Tokyo","Singapore"]
 
-const savedUser = JSON.parse(localStorage.getItem("user"))
+let container=document.getElementById("recommendations")
 
-if(savedUser && savedUser.email === email && savedUser.password === password){
+container.innerHTML=""
 
-user = savedUser
-render()
+for(let i=0;i<3;i++){
 
-}else{
+let p=places[Math.floor(Math.random()*places.length)]
 
-alert("Invalid login")
+container.innerHTML+=
+
+`<div class="card">
+
+<h4 class="text-xl">${p}</h4>
+
+<p>Top travel destination with great attractions.</p>
+
+</div>`
 
 }
 
 }
 
-function logout(){
+function askAI(){
 
-localStorage.removeItem("user")
-user = null
-render()
+let q=document.getElementById("question").value
 
-}
+document.getElementById("aiAnswer").innerText=
 
-function searchRoute(){
-
-const from = document.getElementById("from").value
-const to = document.getElementById("to").value
-
-const result = document.getElementById("result")
-
-const transport = ["Bus","Train","Flight","Taxi"]
-
-const randomTransport = transport[Math.floor(Math.random()*transport.length)]
-
-const time = Math.floor(Math.random()*8)+2
-const cost = Math.floor(Math.random()*4000)+500
-const distance = Math.floor(Math.random()*1500)+200
-
-result.innerHTML = `
-
-<p><b>Transport:</b> ${randomTransport}</p>
-<p><b>Time:</b> ${time} hours</p>
-<p><b>Cost:</b> ₹${cost}</p>
-<p><b>Distance:</b> ${distance} km</p>
-
-`
+"AI Response: For '"+q+"' I recommend checking popular destinations and travel deals."
 
 }
-
-render()
 
 </script>
 
 </body>
+
 </html>
