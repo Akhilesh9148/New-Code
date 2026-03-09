@@ -9,167 +9,14 @@
 <title>AI Travel Planner</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="styles.css">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:#0f172a;
-color:white;
-transition:0.4s;
-}
-
-/* LIGHT MODE */
-
-body.light{
-background:white;
-color:black;
-}
-
-/* NAVBAR */
-
-nav{
-display:flex;
-justify-content:space-between;
-padding:20px 40px;
-}
-
-button{
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-/* HERO */
-
-.hero{
-height:70vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-}
-
-.hero h1{
-font-size:55px;
-animation:float 4s infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-100%{transform:translateY(0)}
-}
-
-/* SEARCH PANEL */
-
-.panel{
-margin-top:30px;
-background:rgba(255,255,255,0.1);
-padding:25px;
-border-radius:12px;
-width:320px;
-backdrop-filter:blur(12px);
-}
-
-input,select{
-width:100%;
-padding:12px;
-margin-bottom:10px;
-border-radius:8px;
-border:none;
-}
-
-/* MAP */
-
-.map{
-width:100%;
-height:350px;
-background:url("https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg");
-background-size:cover;
-background-position:center;
-margin-top:40px;
-position:relative;
-}
-
-/* ROUTE ANIMATION */
-
-.route{
-position:absolute;
-width:200px;
-height:3px;
-background:red;
-top:50%;
-left:30%;
-transform:rotate(20deg);
-animation:moveRoute 2s infinite linear;
-display:none;
-}
-
-@keyframes moveRoute{
-0%{opacity:0}
-50%{opacity:1}
-100%{opacity:0}
-}
-
-/* RESULT */
-
-.result{
-text-align:center;
-margin-top:20px;
-font-size:18px;
-}
-
-/* DESTINATION CARDS */
-
-.destinations{
-margin-top:50px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-padding:40px;
-}
-
-.card{
-background:rgba(255,255,255,0.1);
-padding:20px;
-border-radius:12px;
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-10px) scale(1.03);
-}
-
-.card img{
-width:100%;
-border-radius:10px;
-margin-bottom:10px;
-}
-
-/* AI PANEL */
-
-.ai-panel{
-margin:40px;
-background:rgba(255,255,255,0.1);
-padding:25px;
-border-radius:12px;
-}
-
-</style>
 
 </head>
 
 <body>
+
+<!-- NAVBAR -->
 
 <nav>
 
@@ -179,7 +26,7 @@ border-radius:12px;
 
 </nav>
 
-<!-- HERO -->
+<!-- HERO SECTION -->
 
 <div class="hero">
 
@@ -209,13 +56,15 @@ border-radius:12px;
 
 </div>
 
-<!-- MAP -->
+<!-- MAP SECTION -->
 
 <div class="map">
 
 <div class="route" id="routeLine"></div>
 
 </div>
+
+<!-- RESULT SECTION -->
 
 <div class="result" id="result"></div>
 
@@ -291,12 +140,16 @@ return
 
 }
 
+/* SHOW ROUTE ANIMATION */
+
 document.getElementById("routeLine").style.display="block"
+
+/* DISPLAY RESULT */
 
 document.getElementById("result").innerHTML=
 
 "Route from <b>"+from+"</b> to <b>"+to+
-"</b><br>Preferred Transport: <b>"+transport+"</b>"
+"</b><br>Transport: <b>"+transport+"</b>"
 
 }
 
@@ -305,7 +158,7 @@ function askAI(){
 let q=document.getElementById("question").value
 
 document.getElementById("answer").innerText=
-"AI Suggestion: For '"+q+"' you should explore popular destinations and travel deals."
+"AI Suggestion: For '"+q+"' explore popular destinations and travel deals."
 
 }
 
