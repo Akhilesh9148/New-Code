@@ -1,1 +1,170 @@
+/* HERO SECTION */
 
+.page-hero{
+position:relative;
+min-height:90vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(120deg,#0f172a,#1e3a8a,#6366f1);
+color:white;
+padding:40px;
+}
+
+/* OVERLAY */
+
+.page-overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+}
+
+/* CONTENT */
+
+.page-content{
+position:relative;
+z-index:2;
+max-width:1200px;
+width:100%;
+}
+
+/* HERO CONTENT LAYOUT */
+
+.hero-content{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:60px;
+flex-wrap:wrap;
+}
+
+/* TEXT */
+
+.hero-text{
+max-width:600px;
+}
+
+.hero-text h1{
+font-size:48px;
+margin-bottom:10px;
+}
+
+.hero-text span{
+color:#60a5fa;
+}
+
+.hero-text h2{
+font-size:24px;
+margin-bottom:15px;
+font-weight:400;
+}
+
+.hero-text p{
+line-height:1.6;
+margin-bottom:25px;
+}
+
+/* BUTTONS */
+
+.hero-buttons{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+}
+
+.btn-primary{
+background:#3b82f6;
+padding:12px 22px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+transition:0.3s;
+}
+
+.btn-primary:hover{
+background:#2563eb;
+transform:translateY(-2px);
+}
+
+.btn-secondary{
+border:2px solid #3b82f6;
+padding:10px 20px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+transition:0.3s;
+}
+
+.btn-secondary:hover{
+background:#3b82f6;
+}
+
+/* SOCIAL LINKS */
+
+.hero-social{
+margin-top:10px;
+}
+
+.hero-social a{
+margin-right:15px;
+text-decoration:none;
+color:#93c5fd;
+transition:0.3s;
+}
+
+.hero-social a:hover{
+color:white;
+}
+
+/* PROFILE IMAGE */
+
+.hero-image img{
+width:280px;
+height:280px;
+object-fit:cover;
+border-radius:50%;
+border:4px solid rgba(255,255,255,0.3);
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+transition:0.4s;
+}
+
+.hero-image img:hover{
+transform:scale(1.05);
+}
+
+/* FOOTER */
+
+.footer-minimal{
+text-align:center;
+padding:20px;
+background:#0f172a;
+color:#cbd5f5;
+}
+
+.footer-name{
+font-weight:600;
+margin-bottom:5px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width:900px){
+
+.hero-content{
+flex-direction:column;
+text-align:center;
+}
+
+.hero-image img{
+width:220px;
+height:220px;
+}
+
+.hero-buttons{
+justify-content:center;
+}
+
+}
