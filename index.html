@@ -4,125 +4,80 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Travel Planner | Akhilesh</title>
 
-<title>Smart AI Planner</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+/* HERO SECTION */
 
-body{
-background:linear-gradient(135deg,#0f172a,#1e3a8a,#6366f1);
-color:white;
-transition:0.4s;
-}
-
-/* LIGHT MODE */
-
-body.light{
-background:white;
-color:black;
-}
-
-/* LOGIN PAGE */
-
-.login-page{
-height:100vh;
+.travel-hero{
+height:90vh;
 display:flex;
+align-items:center;
 justify-content:center;
+background:linear-gradient(120deg,#0f172a,#1e3a8a,#6366f1);
+color:white;
+}
+
+.travel-content{
+display:flex;
+gap:60px;
 align-items:center;
 }
 
-.login-box{
-background:rgba(255,255,255,0.1);
-padding:40px;
-border-radius:15px;
-width:320px;
-backdrop-filter:blur(12px);
-text-align:center;
+/* TEXT */
+
+.travel-text h1{
+font-size:45px;
+margin-bottom:10px;
 }
 
-.login-box h2{
+.travel-text p{
 margin-bottom:20px;
-}
-
-.login-box input{
-width:100%;
-padding:12px;
-margin-bottom:12px;
-border:none;
-border-radius:8px;
-}
-
-.login-box button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-background:#3b82f6;
-color:white;
-cursor:pointer;
-}
-
-/* NAVBAR */
-
-nav{
-display:flex;
-justify-content:space-between;
-padding:20px 40px;
-}
-
-/* HERO */
-
-.hero{
-height:70vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-}
-
-.hero h1{
-font-size:50px;
 }
 
 /* SEARCH PANEL */
 
-.panel{
-margin-top:20px;
+.travel-panel{
 background:rgba(255,255,255,0.1);
 padding:25px;
-border-radius:12px;
+border-radius:10px;
 width:320px;
-backdrop-filter:blur(12px);
+backdrop-filter:blur(10px);
 }
 
-input,select{
+.travel-panel input,
+.travel-panel select{
 width:100%;
-padding:12px;
+padding:10px;
 margin-bottom:10px;
-border-radius:8px;
 border:none;
+border-radius:6px;
+}
+
+.travel-panel button{
+width:100%;
+padding:10px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:6px;
+cursor:pointer;
 }
 
 /* MAP */
 
+.map-section{
+margin-top:40px;
+text-align:center;
+}
+
 .map{
-width:100%;
-height:350px;
+height:300px;
 background:url("https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg");
 background-size:cover;
-background-position:center;
-margin-top:40px;
 position:relative;
 }
 
@@ -133,12 +88,11 @@ height:3px;
 background:red;
 top:50%;
 left:30%;
-transform:rotate(20deg);
 display:none;
-animation:moveRoute 2s infinite linear;
+animation:routeMove 2s infinite linear;
 }
 
-@keyframes moveRoute{
+@keyframes routeMove{
 0%{opacity:0}
 50%{opacity:1}
 100%{opacity:0}
@@ -147,44 +101,8 @@ animation:moveRoute 2s infinite linear;
 /* RESULT */
 
 .result{
-text-align:center;
 margin-top:20px;
 font-size:18px;
-}
-
-/* DESTINATIONS */
-
-.destinations{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-padding:40px;
-}
-
-.card{
-background:rgba(255,255,255,0.1);
-padding:20px;
-border-radius:12px;
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-}
-
-.card img{
-width:100%;
-border-radius:10px;
-margin-bottom:10px;
-}
-
-/* AI PANEL */
-
-.ai-panel{
-margin:40px;
-background:rgba(255,255,255,0.1);
-padding:25px;
-border-radius:12px;
 }
 
 </style>
@@ -193,43 +111,39 @@ border-radius:12px;
 
 <body>
 
-<!-- LOGIN PAGE -->
+<!-- NAVBAR (same structure as your portfolio) -->
 
-<div class="login-page" id="loginPage">
+<nav class="navbar glass">
 
-<div class="login-box">
+<div class="logo">Akhilesh</div>
 
-<h2>Login to Travel Planner</h2>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="projects.html">Projects</a></li>
+<li><a href="travel.html" class="active">Travel Planner</a></li>
+</ul>
 
-<input id="username" placeholder="Username">
-
-<input type="password" id="password" placeholder="Password">
-
-<button onclick="login()">Login</button>
-
+<div class="social">
+<a href="https://github.com/Akhilesh9148">GitHub</a>
+<a href="https://linkedin.com">LinkedIn</a>
 </div>
-
-</div>
-
-<!-- MAIN APP -->
-
-<div id="app" style="display:none">
-
-<nav>
-
-<h2>AI Travel Planner</h2>
-
-<button onclick="toggleMode()">Dark / Light</button>
 
 </nav>
 
-<div class="hero">
 
-<h1>Plan Your Journey</h1>
+<!-- HERO SECTION -->
 
-<p>Find the best travel routes with AI</p>
+<section class="travel-hero">
 
-<div class="panel">
+<div class="travel-content">
+
+<div class="travel-text">
+
+<h1>AI Travel Planner</h1>
+
+<p>Find the best travel route using AI.</p>
+
+<div class="travel-panel">
 
 <input id="from" placeholder="From City">
 
@@ -251,6 +165,15 @@ border-radius:12px;
 
 </div>
 
+</div>
+
+</section>
+
+
+<!-- MAP -->
+
+<div class="map-section">
+
 <div class="map">
 
 <div class="route" id="routeLine"></div>
@@ -259,79 +182,10 @@ border-radius:12px;
 
 <div class="result" id="result"></div>
 
-<div class="destinations">
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
-
-<h3>Goa</h3>
-
-<p>Beautiful beaches and nightlife.</p>
-
 </div>
 
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1">
-
-<h3>Bali</h3>
-
-<p>Perfect island getaway.</p>
-
-</div>
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800">
-
-<h3>Dubai</h3>
-
-<p>Luxury city travel destination.</p>
-
-</div>
-
-</div>
-
-<div class="ai-panel">
-
-<h3>AI Travel Assistant</h3>
-
-<input id="question" placeholder="Ask travel question">
-
-<button onclick="askAI()">Ask</button>
-
-<p id="answer"></p>
-
-</div>
-
-</div>
 
 <script>
-
-function login(){
-
-let user=document.getElementById("username").value
-let pass=document.getElementById("password").value
-
-if(user && pass){
-
-document.getElementById("loginPage").style.display="none"
-document.getElementById("app").style.display="block"
-
-}else{
-
-alert("Enter username and password")
-
-}
-
-}
-
-function toggleMode(){
-
-document.body.classList.toggle("light")
-
-}
 
 function planTrip(){
 
@@ -353,15 +207,6 @@ document.getElementById("result").innerHTML=
 
 "Route from <b>"+from+"</b> to <b>"+to+
 "</b><br>Transport: <b>"+transport+"</b>"
-
-}
-
-function askAI(){
-
-let q=document.getElementById("question").value
-
-document.getElementById("answer").innerText=
-"AI Suggestion: For '"+q+"' explore popular travel destinations."
 
 }
 
